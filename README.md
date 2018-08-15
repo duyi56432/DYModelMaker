@@ -15,30 +15,7 @@
 目前提供了两类方法：
 1.字典生成模型，支持多层模型嵌套，自动生成两种框架（MJExtension和YYModel）的系统关键字替换和数组中字典转模型代码，导入#import "NSObject+DYModelMaker.h"自动实现归档、解档，直接存取模型即可。
 
-2.模型间赋值操作：
->>*将model1 属性名相同的部分赋值给model2,不同部分互不影响*
->>*实现copy，深复制一个model*
->>*将model0 和 model1 合并赋值到model2，model2中和model0、model1不同属性部分互不影响*
-
-<pre><code>NSDictionary *dic= @{@"id":@1,
-                                                    @"data":@{@"app_id":@3,
-                                                                      @"nextFlowId":@{@"test10":@""},
-@"approveResultValue":@[],
-@"title":@"加班流程",
-@"level":@1,
-@"flowinfo":@[@{@"reason":@"有其他事",
-@"day_number":@6,
-@"id":@(11),
-@"time2":@"2017-03-03 11:28:00",
-@"dept_name":@"技术部",
-@"hour_number":@4}],
-@"flowTypeId":@4,
-@"department":@"技术部",
-@"result":@0,
-@"forword_emp_name":@"管理员 狗蛋 "}};
-
-[NSObject DY_makeModelWithDictionary:dic modelKeyword:@"DY" modelName:@"testModel"  makeType:DYModelMakerTypeMJ];
-</code></pre>
+[![dicImg]](https://github.com/duyi56432/DYModelMaker/blob/master/dicImg.jpg)  
 
 生成的结果
 
@@ -111,7 +88,9 @@ return @{@"Id" : @"id"};
 
 @end
 
-
 </code></pre>
 
-
+2.模型间赋值操作：
+>>>>将model1 属性名相同的部分赋值给model2,不同部分互不影响
+>>>>实现copy，深复制一个model
+>>>>将model0 和 model1 合并赋值到model2，model2中和model0、model1不同属性部分互不影响
