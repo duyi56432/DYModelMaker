@@ -16,13 +16,13 @@
 1.字典生成模型，支持多层模型嵌套，自动生成两种框架（MJExtension和YYModel）的系统关键字替换和数组中字典转模型代码，导入#import "NSObject+DYModelMaker.h"自动实现归档、解档，直接存取模型即可。
 
 2.模型间赋值操作：
->>*将model1 属性名相同的部分赋值给model2,不同部分互不影响
->>*实现copy，深复制一个model
->>*将model0 和 model1 合并赋值到model2，model2中和model0、model1不同属性部分互不影响
+>>*将model1 属性名相同的部分赋值给model2,不同部分互不影响*
+>>*实现copy，深复制一个model*
+>>*将model0 和 model1 合并赋值到model2，model2中和model0、model1不同属性部分互不影响*
 
 <pre><code>NSDictionary *dic= @{@"id":@1,
-@"data":@{@"app_id":@3,
-@"nextFlowId":@{@"test10":@""},
+                                                    @"data":@{@"app_id":@3,
+                                                                      @"nextFlowId":@{@"test10":@""},
 @"approveResultValue":@[],
 @"title":@"加班流程",
 @"level":@1,
