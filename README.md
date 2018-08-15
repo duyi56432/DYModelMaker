@@ -13,9 +13,8 @@
 ## 用法
 
 目前提供了两类方法：
-1.字典生成模型，支持多层模型嵌套，自动生成两种框架（MJExtension和YYModel）的系统关键字替换和数组中字典转模型代码，导入#import "NSObject+DYModelMaker.h"自动实现归档、解档，直接存取模型即可。
-
-[![dicImg]](https://github.com/duyi56432/DYModelMaker/blob/master/dicImg.jpg)  
+1.字典生成模型，支持多层模型嵌套，自动生成两种框架（MJExtension和YYModel）的系统关键字替换和数组中字典转模型代码，导入#import "NSObject+DYModelMaker.h"自动实现归档、解档，直接存取模型即可
+![dicImg](https://github.com/duyi56432/DYModelMaker/blob/master/dicImg.jpg)  
 
 生成的结果
 
