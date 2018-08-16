@@ -7,8 +7,6 @@
 //
 
 #import "ViewController.h"
-//#import "DYModelMaker.h"
-#import "MJExtension.h"
 #import "NSObject+DYModelMaker.h"
 #import "DYTestModel.h"
 
@@ -78,7 +76,7 @@
     NSString *filePath = [documentPath stringByAppendingPathComponent:@"cache001"];
     [NSKeyedArchiver archiveRootObject:model toFile:filePath];
     DYMakeModel *tmodel = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
-    NSLog(@"%@",[tmodel mj_JSONString]);
+
 }
 
 //将model0 属性名相同的部分赋值给model1
@@ -91,7 +89,7 @@
     model1.testStr = @"testStr1";
     
     [NSObject assignmentModel:model0 toModel:model1];
-    NSLog(@"%@",[model1 mj_JSONString]);
+
 }
 
 //copy model0新生成一个model1
@@ -101,7 +99,7 @@
     model0.testNumber = @10;
     
     DYTestModel *model1 = [NSObject copyWithModel:model0];
-    NSLog(@"%@",[model1 mj_JSONString]);
+
 }
 
 //model0 和 model1 合并到model2
@@ -114,6 +112,6 @@
     
     DYTest2Model *model2 = [[DYTest2Model alloc] init];
     [NSObject combineModelWithModel1:model0 model2:model1 toModel:model2];
-    NSLog(@"%@",[model2 mj_JSONString]);
+
 }
 @end
