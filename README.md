@@ -90,6 +90,27 @@ return @{@"Id" : @"id"};
 </code></pre>
 
 2.模型间赋值操作：
->>>>将model1 属性名相同的部分赋值给model2,不同部分互不影响
->>>>实现copy，深复制一个model
->>>>将model0 和 model1 合并赋值到model2，model2中和model0、model1不同属性部分互不影响
+>1）将model1 属性名相同的部分赋值给model2,不同部分互不影响
+<pre><code>DYTestModel *model0 = [[DYTestModel alloc] init];
+model0.testStr = @"testStr0";
+model0.testNumber = @10;
+
+DYTest1Model *model1 = [[DYTest1Model alloc] init];
+model1.testStr = @"testStr1";
+
+[NSObject assignmentModel:model0 toModel:model1]; </code></pre>
+>2）实现copy，深复制一个model
+<pre><code>DYTestModel *model0 = [[DYTestModel alloc] init];
+model0.testStr = @"testStr0";
+model0.testNumber = @10;
+
+DYTestModel *model1 = [NSObject copyWithModel:model0];</code></pre>
+>3）将model0 和 model1 合并赋值到model2，model2中和model0、model1不同属性部分互不影响
+<pre><code>DYTestModel *model0 = [[DYTestModel alloc] init];
+model0.testNumber = @10;
+
+DYTest1Model *model1 = [[DYTest1Model alloc] init];
+model1.testStr = @"testStr1";
+
+DYTest2Model *model2 = [[DYTest2Model alloc] init];
+[NSObject combineModelWithModel1:model0 model2:model1 toModel:model2];</code></pre>
