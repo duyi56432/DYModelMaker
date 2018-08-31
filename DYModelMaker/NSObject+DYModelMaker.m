@@ -12,8 +12,8 @@
 static NSString *stringClass = @"@property (nonatomic, copy) NSString *";
 static NSString *numberClass = @"@property (nonatomic, strong) NSNumber *";
 static NSString *nsnullClass = @"@property (nonatomic, strong) id ";
-static NSString *dictionaryClass = @"@property (nonatomic, strong) ";
-static NSString *arrayClass = @"@property (nonatomic, strong) NSArray *";
+static NSString *dictionaryClass = @"@property (nonatomic, copy) ";
+static NSString *arrayClass = @"@property (nonatomic, copy) NSArray *";
 static NSString *MJ_ReplaceId = @"\n+(NSDictionary *)mj_replacedKeyFromPropertyName {\n  return @{@\"Id\" : @\"id\"};\n\n}";
 static NSString *YY_ReplaceId = @"\n+(NSDictionary *)modelCustomPropertyMapper {\n  return @{@\"Id\" : @\"id\"};\n\n}";
 static NSString *MJ_ArrIncludeDicToModelString = @"mj_objectClassInArray";
@@ -117,7 +117,6 @@ static DYHeadModel *_headModel;
         } else if (_makerType == DYModelMakerTypeYY) {
             [model.footerStr appendFormat:@"\n+ (NSDictionary *)%@{\n return @{ %@ }; \n}",YY_ArrIncludeDicToModelString,model.modelArrayString];
         }
-        
     }
     
     [self modelFooterWithMakeModel:model];
@@ -307,6 +306,20 @@ static DYHeadModel *_headModel;
             object_setIvar(tomodel, toModelIvar, object_getIvar(model2, model2Ivar));
         }
     }
+}
+
++ (BOOL)isEqualModel1:(id)model1 model2:(id)model2 {
+    unsigned int modelCount = 0;
+    Ivar *modelIvarList = class_copyIvarList([model1 class], &modelCount);
+    BOOL isEqual = YES;
+    for (NSInteger i = 0; i < modelCount; i++) {
+        Ivar modelIvar = class_getInstanceVariable([model1 class], ivar_getName(modelIvarList[i]));
+        if (object_getIvar(model1, modelIvar) != object_getIvar(model2, modelIvar)) {
+            isEqual = NO;
+            break;
+        }
+    }
+    return isEqual;
 }
  
 @end

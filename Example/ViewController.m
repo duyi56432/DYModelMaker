@@ -35,6 +35,9 @@
         case 3:
             [self combineModelTest];
             break;
+        case 4:
+            [self isEqualModelTest];
+            break;
         default:
             break;
     }
@@ -113,5 +116,22 @@
     DYTest2Model *model2 = [[DYTest2Model alloc] init];
     [NSObject combineModelWithModel1:model0 model2:model1 toModel:model2];
 
+}
+
+- (void)isEqualModelTest {
+    DYTestModel *model0 = [[DYTestModel alloc] init];
+    model0.testNumber = @10;
+    model0.testStr = @"model0";
+    
+    DYTestModel *model1 = [[DYTestModel alloc] init];
+    model1.testNumber = @11;
+    model1.testStr = @"model1";
+    
+    DYTestModel *model2 = [[DYTestModel alloc] init];
+    model2.testNumber = @10;
+    model2.testStr = @"model0";
+    
+    NSLog(@"model0 %@ model1",[NSObject isEqualModel1:model0 model2:model1]? @"等于" : @"不等于");
+    NSLog(@"model0 %@ model2",[NSObject isEqualModel1:model0 model2:model2]? @"等于" : @"不等于");
 }
 @end

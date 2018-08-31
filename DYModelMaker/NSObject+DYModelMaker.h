@@ -12,7 +12,8 @@
 
 typedef NS_ENUM(NSInteger,DYModelMakerType) {
     DYModelMakerTypeMJ,
-    DYModelMakerTypeYY
+    DYModelMakerTypeYY,
+    DYModelMakerTypeNo
 };
 
 @interface NSObject (DYModelMaker)
@@ -68,4 +69,14 @@ typedef NS_ENUM(NSInteger,DYModelMakerType) {
  @param tomodel 合并结果model
  */
 + (void)combineModelWithModel1:(id)model1 model2:(id)model2 toModel:(id)tomodel;
+
+
+/**
+ 判断model1和model2所有属性的值是否相等
+
+ @param model1 参数1
+ @param model2 参数2
+ @return 值是否相等
+ */
++ (BOOL)isEqualModel1:(id)model1 model2:(id)model2;
 @end
