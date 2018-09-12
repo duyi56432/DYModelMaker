@@ -1,14 +1,19 @@
 //
-//  NSObject+DYModelMaker.h
+//  DYModelMaker.h
 //  DYModelMaker
 //
-//  Created by 杜燚 on 2018/8/14.
+//  Created by 杜燚 on 2018/9/12.
 //  Copyright © 2018年 shuodakeji. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import <objc/runtime.h>
 #import "DYMakeModel.h"
+#import "NSObject+DYModelArchive.h"
+
+
+#import <Foundation/Foundation.h>
+#import "DYMakeModel.h"
+#import "NSObject+DYModelArchive.h"
 
 typedef NS_ENUM(NSInteger,DYModelMakerType) {
     DYModelMakerTypeMJ,
@@ -16,10 +21,21 @@ typedef NS_ENUM(NSInteger,DYModelMakerType) {
     DYModelMakerTypeNo
 };
 
-@interface NSObject (DYModelMaker)
-@property (nonatomic, assign, class) DYModelMakerType makerType;
-@property (nonatomic, strong, class) NSString *modelKeyword;
-@property (nonatomic, strong, class) DYHeadModel *headModel;
+
+typedef NS_ENUM(NSInteger,DYModelNumberType) {
+    DYModelNumberTypeNumber,
+    DYModelNumberTypeString,
+    DYModelNumberTypeDouble
+};
+
+@interface DYModelMaker : NSObject
+//使用MJExtension 还是YYModel 自动生成模型中系统关键字替换和数组中字典转模型语法代码
+@property (nonatomic, assign) DYModelMakerType makerType;
+
+ //纯数字转换的类型，默认为NSNumber，可选择转为NSString或者double
+@property (nonatomic, assign) DYModelNumberType numberType;
+
++ (instancetype)shareManager;
 
 /**
  根据字典打印出对应属性模型
@@ -32,8 +48,7 @@ typedef NS_ENUM(NSInteger,DYModelMakerType) {
  */
 + (void)DY_makeModelWithDictionary:(NSDictionary *)dictionary
                       modelKeyword:(NSString *)modelKeyword
-                         modelName:(NSString *)modelName
-                          makeType:(DYModelMakerType)makerType;
+                         modelName:(NSString *)modelName;
 
 /**
  获取当前模型Interface部分
@@ -73,7 +88,7 @@ typedef NS_ENUM(NSInteger,DYModelMakerType) {
 
 /**
  判断model1和model2所有属性的值是否相等
-
+ 
  @param model1 参数1
  @param model2 参数2
  @return 值是否相等

@@ -9,6 +9,8 @@
 
 **pod 'DYModelMaker'**    
 
+## 博客
+[这里有更详细用法](https://www.jianshu.com/p/04f00837094c)
 
 ## 简介
 @interface XYDHomeBannerModel : NSObject
@@ -18,7 +20,7 @@
 @property (nonatomic, copy) NSString *imgBg;
 
 @property (nonatomic, copy) NSString *linkId;
-。。。
+
 @end
 
 上面这段代码还在一个一个属性的敲吗？要是有100个字段呢？要是数据结构四五六七层呢？DYModelMaker解放你的双手，一行代码生成所有属性！
@@ -33,14 +35,15 @@
  
  2）自动生成两种框架（MJExtension和YYModel）的系统关键字替换和数组中字典转模型代码。
  
- 3）导入#import "NSObject+DYModelMaker.h"自动实现归档、解档，直接存取模型即可
+ 3）导入#import "NSObject+DYModelMaker.h"自动实现归档、解档，直接存取模型即可.
+ 
  举个栗子：下面这段数据怕不怕？
 ![dicImg](https://github.com/duyi56432/DYModelMaker/blob/master/dicImg.jpg)  
 
 使用DYModelMaker一行搞定
 
 <pre><code>//直接放到网络请求结果调用，生成模型后删除就行，结果打印在控制台
-[NSObject DY_makeModelWithDictionary:dic modelKeyword:@"DY" modelName:@"testModel"  makeType:DYModelMakerTypeMJ];
+[DYModelMaker DY_makeModelWithDictionary:dic modelKeyword:@"DY" modelName:@"testModel"  makeType:DYModelMakerTypeMJ];
 </code></pre>
 
 看结果--> 直接复制粘贴就行了
@@ -55,29 +58,29 @@
 
 
 @interface DYTestModel : NSObject
-@property (nonatomic, strong) NSNumber *testModelId;
-@property (nonatomic, strong) DataModel *data;
+@property (nonatomic, copy) NSString *Id;
+@property (nonatomic, strong) DYDataModel *data;
 @end
 
 @interface DYDataModel : NSObject
-@property (nonatomic, strong) NSNumber *app_id;
-@property (nonatomic, strong) NSNumber *flowTypeId;
-@property (nonatomic, strong) NSArray *approveResultValue;
-@property (nonatomic, strong) NSArray *flowinfo;
-@property (nonatomic, strong) NSNumber *result;
+@property (nonatomic, copy) NSString *app_id;
+@property (nonatomic, copy) NSString *flowTypeId;
+@property (nonatomic, copy) NSArray *approveResultValue;
+@property (nonatomic, copy) NSArray *flowinfo;
+@property (nonatomic, copy) NSString *result;
 @property (nonatomic, copy) NSString *title;
-@property (nonatomic, strong) NSNumber *level;
+@property (nonatomic, copy) NSString *level;
 @property (nonatomic, copy) NSString *forword_emp_name;
 @property (nonatomic, copy) NSString *department;
-@property (nonatomic, strong) NextFlowIdModel *nextFlowId;
+@property (nonatomic, strong) DYNextFlowIdModel *nextFlowId;
 @end
 
 @interface DYFlowinfoModel : NSObject
-@property (nonatomic, strong) NSNumber *day_number;
-@property (nonatomic, strong) NSNumber *flowinfoModelId;
+@property (nonatomic, copy) NSString *day_number;
+@property (nonatomic, copy) NSString *Id;
 @property (nonatomic, copy) NSString *reason;
 @property (nonatomic, copy) NSString *dept_name;
-@property (nonatomic, strong) NSNumber *hour_number;
+@property (nonatomic, copy) NSString *hour_number;
 @property (nonatomic, copy) NSString *time2;
 @end
 
@@ -114,6 +117,7 @@ return @{@"Id" : @"id"};
 
 @end
 
+
 </code></pre>
 
 
@@ -126,13 +130,13 @@ model0.testNumber = @10;
 DYTest1Model *model1 = [[DYTest1Model alloc] init];
 model1.testStr = @"testStr1";
 
-[NSObject assignmentModel:model0 toModel:model1]; </code></pre>
+[DYModelMaker assignmentModel:model0 toModel:model1]; </code></pre>
 >2）实现copy，深复制一个model
 <pre><code>DYTestModel *model0 = [[DYTestModel alloc] init];
 model0.testStr = @"testStr0";
 model0.testNumber = @10;
 
-DYTestModel *model1 = [NSObject copyWithModel:model0];</code></pre>
+DYTestModel *model1 = [DYModelMaker copyWithModel:model0];</code></pre>
 >3）将model0 和 model1 合并赋值到model2，model2中和model0、model1不同属性部分互不影响
 <pre><code>DYTestModel *model0 = [[DYTestModel alloc] init];
 model0.testNumber = @10;
@@ -141,4 +145,4 @@ DYTest1Model *model1 = [[DYTest1Model alloc] init];
 model1.testStr = @"testStr1";
 
 DYTest2Model *model2 = [[DYTest2Model alloc] init];
-[NSObject combineModelWithModel1:model0 model2:model1 toModel:model2];</code></pre>
+[DYModelMaker combineModelWithModel1:model0 model2:model1 toModel:model2];</code></pre>

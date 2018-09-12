@@ -1,84 +1,73 @@
 //
-//  NSObject+DYModelMaker.m
+//  DYModelMaker.m
 //  DYModelMaker
 //
-//  Created by 杜燚 on 2018/8/14.
+//  Created by 杜燚 on 2018/9/12.
 //  Copyright © 2018年 shuodakeji. All rights reserved.
 //
 
-#import "NSObject+DYModelMaker.h"
+#import "DYModelMaker.h"
+#import "DYPropertyString.h"
 #import <objc/runtime.h>
 
-static NSString *stringClass = @"@property (nonatomic, copy) NSString *";
-static NSString *numberClass = @"@property (nonatomic, strong) NSNumber *";
-static NSString *nsnullClass = @"@property (nonatomic, strong) id ";
-static NSString *dictionaryClass = @"@property (nonatomic, copy) ";
-static NSString *arrayClass = @"@property (nonatomic, copy) NSArray *";
-static NSString *MJ_ReplaceId = @"\n+(NSDictionary *)mj_replacedKeyFromPropertyName {\n  return @{@\"Id\" : @\"id\"};\n\n}";
-static NSString *YY_ReplaceId = @"\n+(NSDictionary *)modelCustomPropertyMapper {\n  return @{@\"Id\" : @\"id\"};\n\n}";
-static NSString *MJ_ArrIncludeDicToModelString = @"mj_objectClassInArray";
-static NSString *YY_ArrIncludeDicToModelString = @"modelContainerPropertyGenericClass";
 
-@implementation NSObject (DYModelMaker)
+@interface DYModelMaker ()
+@property (nonatomic, strong) NSString *modelKeyword;
+@property (nonatomic, strong) NSString *numberString;
+@property (nonatomic, strong) DYHeadModel *headModel;
+@end
 
-@dynamic makerType;
-static DYModelMakerType _makerType;
+@implementation DYModelMaker
 
-@dynamic modelKeyword;
-static NSString *_modelKeyword;
+static DYModelMaker *manager = nil;
 
-@dynamic headModel;
-static DYHeadModel *_headModel;
 
-- (DYModelMakerType )makerType {
-    return _makerType;
++ (instancetype)shareManager {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        manager = [[DYModelMaker alloc] init];
+        manager.numberString = numberClass;
+    });
+    return manager;
 }
 
-- (void)setMakerType:(DYModelMakerType )makerType {
-    if (makerType != _makerType) {
-        _makerType = makerType;
++ (NSString *)currentInterfaceString {
+    return [NSString stringWithFormat:@"\n%@\n\n%@",manager.headModel.className,manager.headModel.head];
+}
+
++ (NSString *)currentImplementationString {
+    return [NSString stringWithFormat:@"\n%@",manager.headModel.footer];
+}
+
+- (void)setNumberType:(DYModelNumberType)numberType {
+    switch (numberType) {
+        case DYModelNumberTypeNumber:
+            manager.numberString = numberClass;
+            break;
+        case DYModelNumberTypeString:
+            manager.numberString = stringClass;
+            break;
+        case DYModelNumberTypeDouble:
+            manager.numberString = doubleString;
+            break;
+        default:
+            break;
     }
 }
 
-- (NSString *)modelKeyword {
-    return _modelKeyword;
-}
-
-- (void)setModelKeyword:(NSString *)modelKeyword {
-    if ([_modelKeyword isEqualToString:modelKeyword]) {
-        _modelKeyword = modelKeyword;
-    }
-}
-
-- (DYHeadModel *)headModel {
-    return _headModel;
-}
-
-- (void)setHeadModel:(DYHeadModel *)headModel {
-    _headModel = headModel;
-}
+#pragma mark - 数据处理
 
 + (void)DY_makeModelWithDictionary:(NSDictionary *)dictionary
                       modelKeyword:(NSString *)modelKeyword
-                         modelName:(NSString *)modelName
-                          makeType:(DYModelMakerType)makerType{
+                         modelName:(NSString *)modelName {
     
     if (!dictionary || ![dictionary isKindOfClass:[NSDictionary class]] || dictionary.count == 0) {
         NSLog(@"非字典类型或字典为空!");
         return;
     }
-    _makerType = makerType;
-    _modelKeyword = modelKeyword ?: @"";
-    _headModel = [self dy_makeModelWithDictionary:dictionary ModelName:modelName];
-    NSLog(@"====================@interface==================\n\n%@\n\n%@\n====================@implementation====================\n\n%@\n\n",_headModel.className,_headModel.head,_headModel.footer);
-}
-
-+ (NSString *)currentInterfaceString {
-    return [NSString stringWithFormat:@"\n%@\n\n%@",_headModel.className,_headModel.head];
-}
-
-+ (NSString *)currentImplementationString {
-    return [NSString stringWithFormat:@"\n%@",_headModel.footer];
+    [DYModelMaker shareManager].modelKeyword = modelKeyword ?: @"";
+    [DYModelMaker shareManager].headModel = [self dy_makeModelWithDictionary:dictionary ModelName:modelName];
+    NSLog(@"====================@interface==================\n\n%@\n\n%@\n====================@implementation====================\n\n%@\n\n",manager.headModel.className,manager.headModel.head,manager.headModel.footer);
 }
 
 + (DYHeadModel *)dy_makeModelWithDictionary:(NSDictionary *)dictionary ModelName:(NSString *)modelName {
@@ -112,9 +101,9 @@ static DYHeadModel *_headModel;
     
     //数组中字典转模型
     if (model.modelArrayString.length > 0) {
-        if (_makerType == DYModelMakerTypeMJ) {
+        if (manager.makerType == DYModelMakerTypeMJ) {
             [model.footerStr appendFormat:@"\n+ (NSDictionary *)%@{\n return @{ %@ }; \n}",MJ_ArrIncludeDicToModelString,model.modelArrayString];
-        } else if (_makerType == DYModelMakerTypeYY) {
+        } else if (manager.makerType == DYModelMakerTypeYY) {
             [model.footerStr appendFormat:@"\n+ (NSDictionary *)%@{\n return @{ %@ }; \n}",YY_ArrIncludeDicToModelString,model.modelArrayString];
         }
     }
@@ -133,10 +122,10 @@ static DYHeadModel *_headModel;
 
 + (DYMakeModel *)modelHeadWithModelName:(NSString *)modelName MakeModel:(DYMakeModel *)model{
     
-    [model.headStr appendString:[NSString stringWithFormat:@"@interface %@%@ : NSObject\n",_modelKeyword,[self capitalized:modelName]]];
-    [model.footerStr appendString:[NSString stringWithFormat:@"@implementation %@%@\n",_modelKeyword,[self capitalized:modelName]]];
+    [model.headStr appendString:[NSString stringWithFormat:@"@interface %@%@ : NSObject\n",manager.modelKeyword,[self capitalized:modelName]]];
+    [model.footerStr appendString:[NSString stringWithFormat:@"@implementation %@%@\n",manager.modelKeyword,[self capitalized:modelName]]];
     if (modelName && modelName.length > 0) {
-        [model.classArray addObject:[NSString stringWithFormat:@"@class %@%@;\n",_modelKeyword,[self capitalized:modelName]]];
+        [model.classArray addObject:[NSString stringWithFormat:@"@class %@%@;\n",manager.modelKeyword,[self capitalized:modelName]]];
     }
     return model;
 }
@@ -153,11 +142,11 @@ static DYHeadModel *_headModel;
 + (DYMakeModel *)modelWithString:(id)obj ModelName:(NSString *)modelName MakeModel:(DYMakeModel *)model{
     
     if ([obj isEqualToString:@"id"]) {
-        [model.headStr appendString:[NSString stringWithFormat:@"%@%@Id;\n", stringClass, modelName]];
+        [model.headStr appendString:[NSString stringWithFormat:@"%@Id;\n", stringClass]];
         //将id映射到Id
-        if (_makerType == DYModelMakerTypeMJ) {
+        if (manager.makerType == DYModelMakerTypeMJ) {
             [model.footerStr appendString:MJ_ReplaceId];
-        } else if (_makerType == DYModelMakerTypeYY) {
+        } else if (manager.makerType == DYModelMakerTypeYY) {
             [model.footerStr appendString:YY_ReplaceId];
         }
         
@@ -170,21 +159,21 @@ static DYHeadModel *_headModel;
 + (DYMakeModel *)modelWithNumber:(id)obj ModelName:(NSString *)modelName MakeModel:(DYMakeModel *)model {
     
     if ([obj isEqualToString:@"id"]) {
-        [model.headStr appendString:[NSString stringWithFormat:@"%@%@Id;\n", numberClass, modelName]];
-        if (_makerType == DYModelMakerTypeMJ) {
+        [model.headStr appendString:[NSString stringWithFormat:@"%@Id;\n", manager.numberString]];
+        if (manager.makerType == DYModelMakerTypeMJ) {
             [model.footerStr appendString:MJ_ReplaceId];
-        } else if (_makerType == DYModelMakerTypeYY) {
+        } else if (manager.makerType == DYModelMakerTypeYY) {
             [model.footerStr appendString:YY_ReplaceId];
         }
     } else {
-        [model.headStr appendString:[NSString stringWithFormat:@"%@%@;\n", numberClass, obj]];
+        [model.headStr appendString:[NSString stringWithFormat:@"%@%@;\n", manager.numberString, obj]];
     }
     return model;
 }
 
 + (DYMakeModel *)modelWithDictionary:(id)obj ModelName:(NSString *)modelName MakeModel:(DYMakeModel *)model Dictionary:(NSDictionary *)dictionary{
     
-    [model.headStr appendString:[NSString stringWithFormat:@"%@%@Model *%@;\n",dictionaryClass, [self capitalized:obj],obj]];
+    [model.headStr appendString:[NSString stringWithFormat:@"%@%@%@Model *%@;\n",dictionaryClass,manager.modelKeyword,[self capitalized:obj],obj]];
     DYHeadModel *headModel = [self dy_makeModelWithDictionary:dictionary[obj] ModelName:[NSString stringWithFormat:@"%@Model",obj]];
     
     [model.classArray addObject:headModel.className];
@@ -204,9 +193,9 @@ static DYHeadModel *_headModel;
         [model.headArray addObject:headModel.head];
         [model.footerArray addObject:headModel.footer];
         if (model.modelArrayString.length == 0) {
-            [model.modelArrayString appendFormat:@"@\"%@\" : @\"%@%@Model\"", obj, _modelKeyword,[self capitalized:obj]];
+            [model.modelArrayString appendFormat:@"@\"%@\" : @\"%@%@Model\"", obj, manager.modelKeyword,[self capitalized:obj]];
         } else {
-            [model.modelArrayString appendFormat:@",\n@\"%@\" : @\"%@%@Model\"\n", obj, _modelKeyword,[self capitalized:obj]];
+            [model.modelArrayString appendFormat:@",\n@\"%@\" : @\"%@%@Model\"\n", obj, manager.modelKeyword,[self capitalized:obj]];
         }
     }
     return model;
@@ -231,30 +220,6 @@ static DYHeadModel *_headModel;
         [mStr replaceCharactersInRange:NSMakeRange(0, 1) withString:[NSString stringWithFormat:@"%c",c]];
     }
     return mStr;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    if (self = [self init]) {
-        u_int count;
-        objc_property_t *properties = class_copyPropertyList([self class], &count);
-        for (int i = 0; i < count; i++) {
-            const char *propertyName = property_getName(properties[i]);
-            NSString *key = [NSString stringWithUTF8String:propertyName];
-            [self setValue:[aDecoder decodeObjectForKey:key] forKey:key];
-        }
-        free(properties);
-    }
-    return self;
-}
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-    u_int count;
-    objc_property_t *properties = class_copyPropertyList([self class], &count);
-    for (int i = 0; i < count; i++) {
-        const char *propertyName = property_getName(properties[i]);
-        NSString *key = [NSString stringWithUTF8String:propertyName];
-        [aCoder encodeObject:[self valueForKey:key] forKey:key];
-    }
-    free(properties);
 }
 
 #pragma mark - 模型处理方法
@@ -321,5 +286,5 @@ static DYHeadModel *_headModel;
     }
     return isEqual;
 }
- 
+
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "NSObject+DYModelMaker.h"
+#import "DYModelMaker.h"
 #import "DYTestModel.h"
 
 @interface ViewController ()
@@ -18,7 +18,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    //单利，只需配置一次
+    [DYModelMaker shareManager].numberType = DYModelNumberTypeString;
+    [DYModelMaker shareManager].makerType = DYModelMakerTypeMJ;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -62,7 +64,9 @@
                                    @"result":@0,
                                    @"forword_emp_name":@"管理员 狗蛋 "}};
     
-    [NSObject DY_makeModelWithDictionary:dic modelKeyword:@"DY" modelName:@"testModel"  makeType:DYModelMakerTypeMJ];
+    [DYModelMaker DY_makeModelWithDictionary:dic
+                            modelKeyword:@"DY"
+                               modelName:@"testModel"];
 }
 
 //归档测试
@@ -91,7 +95,7 @@
     DYTest1Model *model1 = [[DYTest1Model alloc] init];
     model1.testStr = @"testStr1";
     
-    [NSObject assignmentModel:model0 toModel:model1];
+    [DYModelMaker assignmentModel:model0 toModel:model1];
 
 }
 
@@ -101,7 +105,7 @@
     model0.testStr = @"testStr0";
     model0.testNumber = @10;
     
-    DYTestModel *model1 = [NSObject copyWithModel:model0];
+    DYTestModel *model1 = [DYModelMaker copyWithModel:model0];
 
 }
 
@@ -114,7 +118,7 @@
     model1.testStr = @"testStr1";
     
     DYTest2Model *model2 = [[DYTest2Model alloc] init];
-    [NSObject combineModelWithModel1:model0 model2:model1 toModel:model2];
+    [DYModelMaker combineModelWithModel1:model0 model2:model1 toModel:model2];
 
 }
 
@@ -131,7 +135,7 @@
     model2.testNumber = @10;
     model2.testStr = @"model0";
     
-    NSLog(@"model0 %@ model1",[NSObject isEqualModel1:model0 model2:model1]? @"等于" : @"不等于");
-    NSLog(@"model0 %@ model2",[NSObject isEqualModel1:model0 model2:model2]? @"等于" : @"不等于");
+    NSLog(@"model0 %@ model1",[DYModelMaker isEqualModel1:model0 model2:model1]? @"等于" : @"不等于");
+    NSLog(@"model0 %@ model2",[DYModelMaker isEqualModel1:model0 model2:model2]? @"等于" : @"不等于");
 }
 @end

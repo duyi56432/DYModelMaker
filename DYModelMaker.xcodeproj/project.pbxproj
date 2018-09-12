@@ -16,7 +16,8 @@
 		0F686C9D212524FD00EB0D01 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F686C8D212524FD00EB0D01 /* main.m */; };
 		0F686C9E212524FD00EB0D01 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F686C91212524FD00EB0D01 /* ViewController.m */; };
 		0F686C9F212524FD00EB0D01 /* DYMakeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F686C94212524FD00EB0D01 /* DYMakeModel.m */; };
-		0F686CA0212524FD00EB0D01 /* NSObject+DYModelMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F686C96212524FD00EB0D01 /* NSObject+DYModelMaker.m */; };
+		0F7B07F82148B2E6004C967F /* NSObject+DYModelArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7B07F72148B2E6004C967F /* NSObject+DYModelArchive.m */; };
+		0F7B07FB2148B381004C967F /* DYModelMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7B07FA2148B381004C967F /* DYModelMaker.m */; };
 		8D06C08D1E66A2E2002F5E02 /* DYModelMakerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D06C08C1E66A2E2002F5E02 /* DYModelMakerTests.m */; };
 		8D06C0981E66A2E2002F5E02 /* DYModelMakerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D06C0971E66A2E2002F5E02 /* DYModelMakerUITests.m */; };
 /* End PBXBuildFile section */
@@ -52,8 +53,11 @@
 		0F686C91212524FD00EB0D01 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		0F686C93212524FD00EB0D01 /* DYMakeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DYMakeModel.h; sourceTree = "<group>"; };
 		0F686C94212524FD00EB0D01 /* DYMakeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DYMakeModel.m; sourceTree = "<group>"; };
-		0F686C95212524FD00EB0D01 /* NSObject+DYModelMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DYModelMaker.h"; sourceTree = "<group>"; };
-		0F686C96212524FD00EB0D01 /* NSObject+DYModelMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DYModelMaker.m"; sourceTree = "<group>"; };
+		0F7B07F62148B2E6004C967F /* NSObject+DYModelArchive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+DYModelArchive.h"; sourceTree = "<group>"; };
+		0F7B07F72148B2E6004C967F /* NSObject+DYModelArchive.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DYModelArchive.m"; sourceTree = "<group>"; };
+		0F7B07F92148B381004C967F /* DYModelMaker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DYModelMaker.h; sourceTree = "<group>"; };
+		0F7B07FA2148B381004C967F /* DYModelMaker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DYModelMaker.m; sourceTree = "<group>"; };
+		0F7B07FC2148B3FC004C967F /* DYPropertyString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DYPropertyString.h; sourceTree = "<group>"; };
 		8D06C06F1E66A2E2002F5E02 /* DYModelMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DYModelMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D06C0881E66A2E2002F5E02 /* DYModelMakerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DYModelMakerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D06C08C1E66A2E2002F5E02 /* DYModelMakerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DYModelMakerTests.m; sourceTree = "<group>"; };
@@ -111,8 +115,11 @@
 			children = (
 				0F686C93212524FD00EB0D01 /* DYMakeModel.h */,
 				0F686C94212524FD00EB0D01 /* DYMakeModel.m */,
-				0F686C95212524FD00EB0D01 /* NSObject+DYModelMaker.h */,
-				0F686C96212524FD00EB0D01 /* NSObject+DYModelMaker.m */,
+				0F7B07F62148B2E6004C967F /* NSObject+DYModelArchive.h */,
+				0F7B07F72148B2E6004C967F /* NSObject+DYModelArchive.m */,
+				0F7B07F92148B381004C967F /* DYModelMaker.h */,
+				0F7B07FA2148B381004C967F /* DYModelMaker.m */,
+				0F7B07FC2148B3FC004C967F /* DYPropertyString.h */,
 			);
 			path = DYModelMaker;
 			sourceTree = "<group>";
@@ -295,10 +302,11 @@
 			files = (
 				0F686C9B212524FD00EB0D01 /* DYTestModel.m in Sources */,
 				0F686C9D212524FD00EB0D01 /* main.m in Sources */,
+				0F7B07F82148B2E6004C967F /* NSObject+DYModelArchive.m in Sources */,
 				0F686C9E212524FD00EB0D01 /* ViewController.m in Sources */,
-				0F686CA0212524FD00EB0D01 /* NSObject+DYModelMaker.m in Sources */,
 				0F686C97212524FD00EB0D01 /* AppDelegate.m in Sources */,
 				0F686C9F212524FD00EB0D01 /* DYMakeModel.m in Sources */,
+				0F7B07FB2148B381004C967F /* DYModelMaker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
