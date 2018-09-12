@@ -10,11 +10,6 @@
 #import "DYMakeModel.h"
 #import "NSObject+DYModelArchive.h"
 
-
-#import <Foundation/Foundation.h>
-#import "DYMakeModel.h"
-#import "NSObject+DYModelArchive.h"
-
 typedef NS_ENUM(NSInteger,DYModelMakerType) {
     DYModelMakerTypeMJ,
     DYModelMakerTypeYY,
@@ -43,7 +38,6 @@ typedef NS_ENUM(NSInteger,DYModelNumberType) {
  @param dictionary 数据字典
  @param modelKeyword 模型前缀关键字 eg: DY....
  @param modelName 最外层模型名称,如果设置了前缀关键字会自动加上
- @param makerType 使用MJExtension 还是YYModel 自动生成模型中系统关键字替换和数组中字典转模型语法代码
  
  */
 + (void)DY_makeModelWithDictionary:(NSDictionary *)dictionary
