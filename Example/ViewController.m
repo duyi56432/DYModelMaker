@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "DYModelMaker.h"
 #import "DYTestModel.h"
+#import <objc/runtime.h>
 
 @interface ViewController ()
 
@@ -21,6 +22,7 @@
     //单利，只需配置一次
     [DYModelMaker shareManager].numberType = DYModelNumberTypeString;
     [DYModelMaker shareManager].makerType = DYModelMakerTypeMJ;
+    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -8,7 +8,9 @@
 ### 使用 cocoapods
 
 **pod 'DYModelMaker'**    
+当前最新版本0.0.3，如果不能搜索最新版本，执行命令 pod setup更新pod后再试。
 
+持续优化中，如果有好多建议和意见欢迎交流，QQ群:433212576
 ## 博客
 [这里有更详细用法](https://www.jianshu.com/p/04f00837094c)
 
@@ -43,7 +45,7 @@
 使用DYModelMaker一行搞定
 
 <pre><code>//直接放到网络请求结果调用，生成模型后删除就行，结果打印在控制台
-[DYModelMaker DY_makeModelWithDictionary:dic modelKeyword:@"DY" modelName:@"testModel"  makeType:DYModelMakerTypeMJ];
+[DYModelMaker DY_makeModelWithDictionary:dic modelKeyword:@"DY" modelName:@"testModel"];
 </code></pre>
 
 看结果--> 直接复制粘贴就行了

@@ -10,7 +10,6 @@
 #import "DYPropertyString.h"
 #import <objc/runtime.h>
 
-
 @interface DYModelMaker ()
 @property (nonatomic, strong) NSString *modelKeyword;
 @property (nonatomic, strong) NSString *numberString;
@@ -20,7 +19,6 @@
 @implementation DYModelMaker
 
 static DYModelMaker *manager = nil;
-
 
 + (instancetype)shareManager {
     static dispatch_once_t onceToken;
@@ -222,6 +220,8 @@ static DYModelMaker *manager = nil;
     return mStr;
 }
 
+
+
 #pragma mark - 模型处理方法
 
 + (void)assignmentModel:(id)model toModel:(id)toModel {
@@ -232,10 +232,11 @@ static DYModelMaker *manager = nil;
     for (NSInteger i = 0; i < modelCount; i++) {
         Ivar modelAivr = modelIvarList[i];
         Ivar toModelAivr = class_getInstanceVariable([toModel class], ivar_getName(modelAivr));
-        if (object_getIvar(model, modelAivr)) {
+        if (modelAivr && object_getIvar(model, modelAivr)) {
             object_setIvar(toModel, toModelAivr, object_getIvar(model, modelAivr));
         }
     }
+    free(modelIvarList);
 }
 
 + (id)copyWithModel:(id)model {
@@ -251,6 +252,8 @@ static DYModelMaker *manager = nil;
         Ivar newModelAivr = newModelIvarList[i];
         object_setIvar(newModel, newModelAivr, object_getIvar(model, modelAivr));
     }
+    free(modelIvarList);
+    free(newModelIvarList);
     return newModel;
 }
 
@@ -271,6 +274,7 @@ static DYModelMaker *manager = nil;
             object_setIvar(tomodel, toModelIvar, object_getIvar(model2, model2Ivar));
         }
     }
+    free(toModelIvarList);
 }
 
 + (BOOL)isEqualModel1:(id)model1 model2:(id)model2 {
@@ -284,6 +288,7 @@ static DYModelMaker *manager = nil;
             break;
         }
     }
+    free(modelIvarList);
     return isEqual;
 }
 

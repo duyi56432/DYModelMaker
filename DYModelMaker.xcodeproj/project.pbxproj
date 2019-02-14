@@ -39,6 +39,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0F587D322194227500C3377E /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		0F587D342194227500C3377E /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
+		0F587D362194227500C3377E /* ActionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActionViewController.h; sourceTree = "<group>"; };
+		0F587D372194227500C3377E /* ActionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActionViewController.m; sourceTree = "<group>"; };
+		0F587D3A2194227600C3377E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ActionViewController.xib; sourceTree = "<group>"; };
+		0F587D3C2194227600C3377E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0F587D3D2194227600C3377E /* DYModelMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DYModelMac.entitlements; sourceTree = "<group>"; };
 		0F686C83212524FD00EB0D01 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0F686C84212524FD00EB0D01 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		0F686C85212524FD00EB0D01 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -91,6 +98,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0F587D312194227500C3377E /* DYModelMac */ = {
+			isa = PBXGroup;
+			children = (
+				0F587D322194227500C3377E /* Media.xcassets */,
+				0F587D342194227500C3377E /* icon.icns */,
+				0F587D362194227500C3377E /* ActionViewController.h */,
+				0F587D372194227500C3377E /* ActionViewController.m */,
+				0F587D392194227600C3377E /* ActionViewController.xib */,
+				0F587D3C2194227600C3377E /* Info.plist */,
+				0F587D3D2194227600C3377E /* DYModelMac.entitlements */,
+			);
+			path = DYModelMac;
+			sourceTree = "<group>";
+		};
 		0F686C82212524FD00EB0D01 /* Example */ = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +151,7 @@
 				0F686C82212524FD00EB0D01 /* Example */,
 				8D06C08B1E66A2E2002F5E02 /* DYModelMakerTests */,
 				8D06C0961E66A2E2002F5E02 /* DYModelMakerUITests */,
+				0F587D312194227500C3377E /* DYModelMac */,
 				8D06C0701E66A2E2002F5E02 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -229,7 +251,7 @@
 				TargetAttributes = {
 					8D06C06E1E66A2E2002F5E02 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 8QVTX9TTNH;
+						DevelopmentTeam = HG2R8Q3U9D;
 						ProvisioningStyle = Automatic;
 					};
 					8D06C0871E66A2E2002F5E02 = {
@@ -340,6 +362,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		0F587D392194227600C3377E /* ActionViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0F587D3A2194227600C3377E /* Base */,
+			);
+			name = ActionViewController.xib;
+			sourceTree = "<group>";
+		};
 		0F686C86212524FD00EB0D01 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -469,7 +499,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 8QVTX9TTNH;
+				DEVELOPMENT_TEAM = HG2R8Q3U9D;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -482,7 +512,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 8QVTX9TTNH;
+				DEVELOPMENT_TEAM = HG2R8Q3U9D;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

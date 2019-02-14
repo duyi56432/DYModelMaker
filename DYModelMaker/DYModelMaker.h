@@ -16,7 +16,6 @@ typedef NS_ENUM(NSInteger,DYModelMakerType) {
     DYModelMakerTypeNo
 };
 
-
 typedef NS_ENUM(NSInteger,DYModelNumberType) {
     DYModelNumberTypeNumber,
     DYModelNumberTypeString,
