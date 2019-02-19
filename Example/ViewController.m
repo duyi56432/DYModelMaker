@@ -98,7 +98,6 @@
     model1.testStr = @"testStr1";
     
     [DYModelMaker assignmentModel:model0 toModel:model1];
-
 }
 
 //copy model0新生成一个model1
@@ -108,7 +107,6 @@
     model0.testNumber = @10;
     
     DYTestModel *model1 = [DYModelMaker copyWithModel:model0];
-
 }
 
 //model0 和 model1 合并到model2

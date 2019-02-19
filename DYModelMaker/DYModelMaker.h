@@ -17,9 +17,10 @@ typedef NS_ENUM(NSInteger,DYModelMakerType) {
 };
 
 typedef NS_ENUM(NSInteger,DYModelNumberType) {
+    DYModelNumberTypeDouble,
     DYModelNumberTypeNumber,
-    DYModelNumberTypeString,
-    DYModelNumberTypeDouble
+    DYModelNumberTypeString
+    
 };
 
 @interface DYModelMaker : NSObject

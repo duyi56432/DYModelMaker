@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@class DYTest2Model;
 
 @interface DYTestModel : NSObject
 @property (nonatomic, strong) NSNumber *testNumber;
@@ -17,7 +18,6 @@
 @interface DYTest1Model : NSObject
 @property (nonatomic, strong) NSString *other;
 @property (nonatomic, strong) NSString *testStr;
-
 @end
 
 @interface DYTest2Model : NSObject

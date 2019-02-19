@@ -24,7 +24,7 @@ static DYModelMaker *manager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         manager = [[DYModelMaker alloc] init];
-        manager.numberString = numberClass;
+        manager.numberType = DYModelNumberTypeDouble;
     });
     return manager;
 }
@@ -225,10 +225,9 @@ static DYModelMaker *manager = nil;
 #pragma mark - 模型处理方法
 
 + (void)assignmentModel:(id)model toModel:(id)toModel {
-    
+
     unsigned int modelCount = 0;
     Ivar *modelIvarList = class_copyIvarList([model class], &modelCount);
-    
     for (NSInteger i = 0; i < modelCount; i++) {
         Ivar modelAivr = modelIvarList[i];
         Ivar toModelAivr = class_getInstanceVariable([toModel class], ivar_getName(modelAivr));
@@ -250,7 +249,9 @@ static DYModelMaker *manager = nil;
     for (NSInteger i = 0; i < modelCount; i++) {
         Ivar modelAivr = modelIvarList[i];
         Ivar newModelAivr = newModelIvarList[i];
-        object_setIvar(newModel, newModelAivr, object_getIvar(model, modelAivr));
+        if (object_getIvar(model, modelAivr)) {
+            object_setIvar(newModel, newModelAivr, object_getIvar(model, modelAivr));
+        }
     }
     free(modelIvarList);
     free(newModelIvarList);
