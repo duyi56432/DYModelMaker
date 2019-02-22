@@ -77,7 +77,7 @@ static DYModelMaker *manager = nil;
     
     for (id obj in dictionary) {
         if ([dictionary[obj] isKindOfClass:[NSString class]]) {
-            
+
             [self modelWithString:obj ModelName:modelName MakeModel:model];
         } else if ([dictionary[obj] isKindOfClass:[NSNumber class]]) {
             
@@ -92,7 +92,6 @@ static DYModelMaker *manager = nil;
             
             [model.headStr appendString:[NSString stringWithFormat:@"%@%@;\n",nsnullClass,obj]];
         } else {
-            
             NSLog(@"%@不能识别的数据类型\n",obj);
         }
     }
@@ -120,10 +119,10 @@ static DYModelMaker *manager = nil;
 
 + (DYMakeModel *)modelHeadWithModelName:(NSString *)modelName MakeModel:(DYMakeModel *)model{
     
-    [model.headStr appendString:[NSString stringWithFormat:@"@interface %@%@ : NSObject\n",manager.modelKeyword,[self capitalized:modelName]]];
-    [model.footerStr appendString:[NSString stringWithFormat:@"@implementation %@%@\n",manager.modelKeyword,[self capitalized:modelName]]];
+    [model.headStr appendString:[NSString stringWithFormat:@"@interface %@%@ : NSObject\n",manager.modelKeyword,[modelName capitalizedString]]];
+    [model.footerStr appendString:[NSString stringWithFormat:@"@implementation %@%@\n",manager.modelKeyword,[modelName capitalizedString]]];
     if (modelName && modelName.length > 0) {
-        [model.classArray addObject:[NSString stringWithFormat:@"@class %@%@;\n",manager.modelKeyword,[self capitalized:modelName]]];
+        [model.classArray addObject:[NSString stringWithFormat:@"@class %@%@;\n",manager.modelKeyword,[modelName capitalizedString]]];
     }
     return model;
 }
@@ -147,7 +146,6 @@ static DYModelMaker *manager = nil;
         } else if (manager.makerType == DYModelMakerTypeYY) {
             [model.footerStr appendString:YY_ReplaceId];
         }
-        
     } else {
         [model.headStr appendString:[NSString stringWithFormat:@"%@%@;\n", stringClass, obj]];
     }
@@ -171,7 +169,7 @@ static DYModelMaker *manager = nil;
 
 + (DYMakeModel *)modelWithDictionary:(id)obj ModelName:(NSString *)modelName MakeModel:(DYMakeModel *)model Dictionary:(NSDictionary *)dictionary{
     
-    [model.headStr appendString:[NSString stringWithFormat:@"%@%@%@Model *%@;\n",dictionaryClass,manager.modelKeyword,[self capitalized:obj],obj]];
+    [model.headStr appendString:[NSString stringWithFormat:@"%@%@%@Model *%@;\n",dictionaryClass,manager.modelKeyword,[obj capitalizedString],obj]];
     DYHeadModel *headModel = [self dy_makeModelWithDictionary:dictionary[obj] ModelName:[NSString stringWithFormat:@"%@Model",obj]];
     
     [model.classArray addObject:headModel.className];
@@ -191,9 +189,9 @@ static DYModelMaker *manager = nil;
         [model.headArray addObject:headModel.head];
         [model.footerArray addObject:headModel.footer];
         if (model.modelArrayString.length == 0) {
-            [model.modelArrayString appendFormat:@"@\"%@\" : @\"%@%@Model\"", obj, manager.modelKeyword,[self capitalized:obj]];
+            [model.modelArrayString appendFormat:@"@\"%@\" : @\"%@%@Model\"", obj, manager.modelKeyword,[obj capitalizedString]];
         } else {
-            [model.modelArrayString appendFormat:@",\n@\"%@\" : @\"%@%@Model\"\n", obj, manager.modelKeyword,[self capitalized:obj]];
+            [model.modelArrayString appendFormat:@",\n@\"%@\" : @\"%@%@Model\"\n", obj, manager.modelKeyword,[obj capitalizedString]];
         }
     }
     return model;
@@ -208,24 +206,9 @@ static DYModelMaker *manager = nil;
         return [obj firstObject];
     }
 }
-
-+ (NSString *)capitalized:(NSString *)string {
-    NSMutableString *mStr = [NSMutableString stringWithString:string];
-    if (string && string.length > 0) {
-        char c = [string characterAtIndex:0];
-        if(c>='a' && c<='z')
-            c-=32;
-        [mStr replaceCharactersInRange:NSMakeRange(0, 1) withString:[NSString stringWithFormat:@"%c",c]];
-    }
-    return mStr;
-}
-
-
-
 #pragma mark - 模型处理方法
 
 + (void)assignmentModel:(id)model toModel:(id)toModel {
-
     unsigned int modelCount = 0;
     Ivar *modelIvarList = class_copyIvarList([model class], &modelCount);
     for (NSInteger i = 0; i < modelCount; i++) {
@@ -239,7 +222,6 @@ static DYModelMaker *manager = nil;
 }
 
 + (id)copyWithModel:(id)model {
-    
     if (!model) return nil;
     NSObject *newModel = [[[model class] alloc] init];
     unsigned int modelCount = 0;
@@ -259,7 +241,6 @@ static DYModelMaker *manager = nil;
 }
 
 + (void)combineModelWithModel1:(id)model1 model2:(id)model2 toModel:(id)tomodel {
-    
     unsigned int toModelCount = 0;
     Ivar *toModelIvarList = class_copyIvarList([tomodel class], &toModelCount);
     
@@ -292,5 +273,4 @@ static DYModelMaker *manager = nil;
     free(modelIvarList);
     return isEqual;
 }
-
 @end
