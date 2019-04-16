@@ -88,4 +88,5 @@ typedef NS_ENUM(NSInteger,DYModelNumberType) {
  @return 值是否相等
  */
 + (BOOL)isEqualModel1:(id)model1 model2:(id)model2;
+
 @end

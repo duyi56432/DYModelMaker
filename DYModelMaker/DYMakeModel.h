@@ -9,19 +9,19 @@
 #import <Foundation/Foundation.h>
 
 @interface DYMakeModel : NSObject
-@property (nonatomic, strong) NSMutableArray *headArray;
-@property (nonatomic, strong) NSMutableArray *footerArray;
-@property (nonatomic, strong) NSMutableArray *classArray;
+@property (nonatomic, copy) NSMutableArray *headArray;
+@property (nonatomic, copy) NSMutableArray *footerArray;
+@property (nonatomic, copy) NSMutableArray *classArray;
 
-@property (nonatomic, strong) NSMutableString *modelArrayString;
-@property (nonatomic, strong) NSMutableString *headStr;
-@property (nonatomic, strong) NSMutableString *footerStr;
+@property (nonatomic, copy) NSMutableString *modelArrayString;
+@property (nonatomic, copy) NSMutableString *headStr;
+@property (nonatomic, copy) NSMutableString *footerStr;
 @property (nonatomic, strong) NSNumber *number;
 @end
 
 @interface DYHeadModel : NSObject
-@property (nonatomic, strong) NSString *head;
-@property (nonatomic, strong) NSString *footer;
-@property (nonatomic, strong) NSString *className;
+@property (nonatomic, copy) NSString *head;
+@property (nonatomic, copy) NSString *footer;
+@property (nonatomic, copy) NSString *className;
 @end
 

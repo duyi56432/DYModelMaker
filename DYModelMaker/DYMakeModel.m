@@ -52,8 +52,6 @@
     return _footerStr;
 }
 
-
-
 @end
 
 @implementation DYHeadModel
