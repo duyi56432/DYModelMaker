@@ -8,7 +8,7 @@
 ### 使用 cocoapods
 
 **pod 'DYModelMaker'**    
-当前最新版本1.0.0，如果不能搜索最新版本，执行命令 pod setup更新pod后再试。
+当前最新版本1.0.1，如果不能搜索最新版本，执行命令 pod setup更新pod后再试。
 
 持续优化中，如果有好多建议和意见欢迎交流，QQ群:433212576
 ## 博客
@@ -159,3 +159,9 @@ model1.testStr = @"testStr1";
 
 DYTest2Model *model2 = [[DYTest2Model alloc] init];
 [DYModelMaker combineModelWithModel1:model0 model2:model1 toModel:model2];</code></pre>
+
+## 更新内容
+【更新内容】修复模型名称大写被转小写问题。
+【更新版本】v1.0.1
+【更新时间】2019.4.16
+

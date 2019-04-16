@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
 
 
   s.name         = "DYModelMaker"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "字典生成模型，支持多层模型嵌套,自动实现归档、解档,实现模型直接的赋值、深复制"
 
   s.description  = <<-DESC
