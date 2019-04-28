@@ -220,6 +220,7 @@ static DYModelMaker *manager = nil;
 #pragma mark - 模型处理方法
 
 + (void)assignmentModel:(id)model toModel:(id)toModel {
+    if (!model || !toModel) return;
     unsigned int modelCount = 0;
     Ivar *modelIvarList = class_copyIvarList([model class], &modelCount);
     for (NSInteger i = 0; i < modelCount; i++) {
@@ -252,6 +253,7 @@ static DYModelMaker *manager = nil;
 }
 
 + (void)combineModelWithModel1:(id)model1 model2:(id)model2 toModel:(id)tomodel {
+    if (!model1 || !model2 || tomodel) return;
     unsigned int toModelCount = 0;
     Ivar *toModelIvarList = class_copyIvarList([tomodel class], &toModelCount);
     
@@ -271,6 +273,7 @@ static DYModelMaker *manager = nil;
 }
 
 + (BOOL)isEqualModel1:(id)model1 model2:(id)model2 {
+    if (!model1 || !model2) return NO;
     unsigned int modelCount = 0;
     Ivar *modelIvarList = class_copyIvarList([model1 class], &modelCount);
     BOOL isEqual = YES;
@@ -283,5 +286,49 @@ static DYModelMaker *manager = nil;
     }
     free(modelIvarList);
     return isEqual;
+}
+
++ (void)initWithModel:(id)model {
+    if (!model) return;
+    unsigned int modelCount = 0;
+    Ivar *modelIvarList = class_copyIvarList([model class], &modelCount);
+    for (NSInteger i = 0; i < modelCount; i++) {
+        Ivar modelIvar = class_getInstanceVariable([model class], ivar_getName(modelIvarList[i]));
+        if (!object_getIvar(model, modelIvar)) {
+            const char *ivarType = ivar_getTypeEncoding(modelIvar);
+            NSString *typeString = [[NSString alloc] initWithUTF8String:ivarType];
+            NSString *classString = [typeString stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+            classString = [classString stringByReplacingOccurrencesOfString:@"@" withString:@""];
+            id value;
+            if ([NSClassFromString(classString) isEqual:[NSNumber class]]) {
+                value = @0.0;
+            } else {
+                value = [[NSClassFromString(classString) alloc] init];
+            }
+            object_setIvar(model, modelIvar, value);
+        }
+    }
+    free(modelIvarList);
+}
+
++ (void)initAllPropertyWithModel:(id)model {
+    if (!model) return;
+    unsigned int modelCount = 0;
+    Ivar *modelIvarList = class_copyIvarList([model class], &modelCount);
+    for (NSInteger i = 0; i < modelCount; i++) {
+        Ivar modelIvar = class_getInstanceVariable([model class], ivar_getName(modelIvarList[i]));
+        const char *ivarType = ivar_getTypeEncoding(modelIvar);
+        NSString *typeString = [[NSString alloc] initWithUTF8String:ivarType];
+        NSString *classString = [typeString stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+        classString = [classString stringByReplacingOccurrencesOfString:@"@" withString:@""];
+        id value;
+        if ([NSClassFromString(classString) isEqual:[NSNumber class]]) {
+            value = @0.0;
+        } else {
+            value = [[NSClassFromString(classString) alloc] init];
+        }
+        object_setIvar(model, modelIvar, value);
+    }
+    free(modelIvarList);
 }
 @end

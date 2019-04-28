@@ -42,6 +42,9 @@
         case 4:
             [self isEqualModelTest];
             break;
+        case 5:
+            [self initModelTest];
+            break;
         default:
             break;
     }
@@ -122,6 +125,7 @@
 
 }
 
+//判断两个Model的所有属性值是否相等
 - (void)isEqualModelTest {
     DYTestModel *model0 = [[DYTestModel alloc] init];
     model0.testNumber = @10;
@@ -137,5 +141,17 @@
     
     NSLog(@"model0 %@ model1",[DYModelMaker isEqualModel1:model0 model2:model1]? @"等于" : @"不等于");
     NSLog(@"model0 %@ model2",[DYModelMaker isEqualModel1:model0 model2:model2]? @"等于" : @"不等于");
+}
+
+//初始化model中所有属性的值，已经有值的属性不受影响
+- (void)initModelTest {
+    DYTestModel *model = [[DYTestModel alloc] init];
+    model.testNumber = @1;
+    [DYModelMaker initWithModel:model];
+    
+    DYTestModel *model1 = [[DYTestModel alloc] init];
+    model1.testNumber = @1;
+    [DYModelMaker initAllPropertyWithModel:model1];
+    
 }
 @end

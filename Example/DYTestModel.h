@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSNumber *testNumber;
 @property (nonatomic, strong) NSString *testStr;
 @property (nonatomic, strong) NSArray *testArr;
+@property (nonatomic, assign) double testDouble;
 @end
 
 @interface DYTest1Model : NSObject

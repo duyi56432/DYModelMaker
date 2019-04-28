@@ -89,4 +89,17 @@ typedef NS_ENUM(NSInteger,DYModelNumberType) {
  */
 + (BOOL)isEqualModel1:(id)model1 model2:(id)model2;
 
+/**
+ 初始化model中所有属性,已经有值的属性不受影响
+
+ @param model 需要初始化属性的model
+ */
++ (void)initWithModel:(id)model;
+
+/**
+ 初始化model中所有属性，已有值的也初始化
+
+ @param model 需要初始化属性的model
+ */
++ (void)initAllPropertyWithModel:(id)model;
 @end
